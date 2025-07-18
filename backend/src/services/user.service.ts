@@ -1,7 +1,7 @@
-import { IUser } from "../interfaces/user.interface";
+import { IUser, IUserInput } from "../interfaces/user.interface";
 import { User } from "../models/user. model";
 
-const createUser = async(userData:IUser)=>{
+export const createUser = async(userData:IUserInput)=>{
     try {
 
         const newuser = new User(userData);
@@ -12,7 +12,7 @@ const createUser = async(userData:IUser)=>{
     }
 }
 
-const getAllUsers = async()=>{
+export const getAllUsers = async()=>{
     try {
 
         const users = await User.find()
@@ -26,7 +26,7 @@ const getAllUsers = async()=>{
 }
 
 
-const getUserById= async(id:string)=>{
+export const getUserById= async(id:string)=>{
     try {
         
         const user = await User.findById(id)
@@ -37,7 +37,7 @@ const getUserById= async(id:string)=>{
 }
 
 
-const getUserByName=async(username:string)=>{
+export const getUserByName=async(username:string)=>{
     try {
 
         const user = await User.findOne({username})
@@ -49,7 +49,7 @@ const getUserByName=async(username:string)=>{
     }
 }
 
-const updateUserById=async(id:string,updatedData:Partial<IUser>)=>{
+export const updateUserById=async(id:string,updatedData:Partial<IUser>)=>{
     try {
         
         const updateduser = User.findByIdAndUpdate(
@@ -67,7 +67,7 @@ const updateUserById=async(id:string,updatedData:Partial<IUser>)=>{
 }
 
 
-const deleteUserById=async(id:string)=>{
+export const deleteUserById=async(id:string)=>{
     try {
         
         const deletedUser = User.findByIdAndDelete(id)
