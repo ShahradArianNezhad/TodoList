@@ -1,0 +1,30 @@
+
+
+services:
+
+  app:
+    build: ./backend
+    container_name: app
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - MONGODB_URI=mongodb://root:root@mongodb:27017
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
