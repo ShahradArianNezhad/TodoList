@@ -1,6 +1,6 @@
 import express, {Application,Request,Response,NextFunction} from 'express'
 import { connectDB } from './databases/connection';
-import { authenthicateUser, createUser, getAllUsers, getUserByName } from './services/user.service';
+import { authenticateUser, createUser, getAllUsers, getUserByName } from './services/userservice';
 
 
 const app:Application = express();
@@ -30,6 +30,29 @@ app.get('/get',async(req:Request,res:Response)=>{
     const result = await getAllUsers()
     res.send(result)
 })
+
+
+app.post('/user/register',async(req:Request,res:Response)=>{
+    const username = req.body.username
+    const password = req.body.password
+    const result = await createUser({username:username,password:password})
+    if(!result){
+        res.sendStatus(409)
+    }
+    res.sendStatus(201)
+})
+
+app.post('/user/login',async(req:Request,res:Response)=>{
+    const username = req.body.username
+    const password = req.body.password
+    const result = await authenticateUser({username:username,password:password})
+    if(!result){
+        res.sendStatus(401)
+    }
+    res.sendStatus(200)
+})
+
+
 
 
 

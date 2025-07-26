@@ -6,6 +6,10 @@ export const createUser = async(userData:IUserInput)=>{
     try {
         const username = userData.username
         const password = bcrypt.hashSync(userData.password,10)
+        const existing = await getUserByName(username)
+        if(existing){
+            return null
+        }
 
         const savedata= {"username":username,"password":password}
 
@@ -85,14 +89,14 @@ export const deleteUserById=async(id:string)=>{
 }
 
 
-export const authenticateUser=async(usernamei:string,password:string)=>{
+export const authenticateUser=async(userdata:IUserInput)=>{
     try{
-        const user = await User.findOne({username : usernamei})
+        const user = await User.findOne({username : userdata.username})
         if(!user){
             return "no user"
         }
 
-        const isMatch = await bcrypt.compare(password,user.password)
+        const isMatch = await bcrypt.compare(userdata.password,user.password)
         if(!isMatch){
             return "no pass"
         }
