@@ -1,6 +1,6 @@
 import express, {Application,Request,Response,NextFunction} from 'express'
 import { connectDB } from './databases/connection';
-import { createUser, getUserByName } from './services/user.service';
+import { authenthicateUser, createUser, getAllUsers, getUserByName } from './services/user.service';
 
 
 const app:Application = express();
@@ -20,17 +20,16 @@ app.get('/',(req:Request,res:Response)=>{
 app.get('/new',async(req:Request,res:Response)=>{
     res.send("newuser from server")
     await createUser({
-        username : "ass",
+        username : "assasasasasassa",
         password : "2135"
     })
 })
 
 
 app.get('/get',async(req:Request,res:Response)=>{
-    const result = await getUserByName("ass")
+    const result = await getAllUsers()
     res.send(result)
 })
-
 
 
 

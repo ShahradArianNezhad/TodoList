@@ -1,10 +1,15 @@
 import { IUser, IUserInput } from "../interfaces/user.interface";
 import { User } from "../models/user. model";
+import bcrypt from 'bcrypt';
 
 export const createUser = async(userData:IUserInput)=>{
     try {
+        const username = userData.username
+        const password = bcrypt.hashSync(userData.password,10)
 
-        const newuser = new User(userData);
+        const savedata= {"username":username,"password":password}
+
+        const newuser = new User(savedata);
         const saveduser = newuser.save()
         return saveduser;
     } catch (error) {
@@ -76,5 +81,27 @@ export const deleteUserById=async(id:string)=>{
 
     } catch (error) {
         throw error
+    }
+}
+
+
+export const authenticateUser=async(usernamei:string,password:string)=>{
+    try{
+        const user = await User.findOne({username : usernamei})
+        if(!user){
+            return "no user"
+        }
+
+        const isMatch = await bcrypt.compare(password,user.password)
+        if(!isMatch){
+            return "no pass"
+        }
+
+        return user
+
+
+
+    }catch(err){
+        return err
     }
 }
