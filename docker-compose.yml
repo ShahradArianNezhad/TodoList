@@ -1,11 +1,8 @@
 
-
 services:
 
   app:
-    build:
-      context: ./backend
-      dockerfile: dockerfile
+    build: .
     container_name: app
     ports:
       - "8000:8000"
@@ -17,7 +14,6 @@ services:
       - mongodb
     restart: unless-stopped
     volumes:
-      - ./backend:/usr/src/app
       - /usr/src/app/node_modules
 
 
