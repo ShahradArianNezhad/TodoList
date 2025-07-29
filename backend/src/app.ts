@@ -54,7 +54,10 @@ app.get('/api/user/get',async(req:Request,res:Response)=>{
 
 app.post('/api/user/register',async(req:Request,res:Response)=>{
 
-    const {username , password} = req.body
+    const {username , password}:{username:string|undefined,password:string|undefined} = req.body
+    if(!password||!username){
+        return res.sendStatus(409)
+    }
 
     const user = await createUser({username:username,password:password})
     if(!user){
@@ -70,8 +73,11 @@ app.post('/api/user/register',async(req:Request,res:Response)=>{
 
 app.post('/api/user/login',async(req:Request,res:Response)=>{
     
-    const {username , password} = req.body
-    
+    const {username , password}:{username:string|undefined,password:string|undefined} = req.body
+    if(!password||!username){
+        return res.sendStatus(409)
+    }
+
     const user = await authenticateUser({username:username,password:password}) as IUser
     if(!user){
         return res.sendStatus(401)
