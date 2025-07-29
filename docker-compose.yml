@@ -1,9 +1,9 @@
 
 services:
 
-  app:
-    build: .
-    container_name: app
+  backend:
+    build: ./backend
+    container_name: backend
     ports:
       - "8000:8000"
     environment:
@@ -16,6 +16,17 @@ services:
     volumes:
       - /usr/src/app/node_modules
       - ./backend/src:/usr/src/app/backend/src
+  
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - 5173:5173
+    restart: unless-stopped
+    volumes:
+      - /usr/src/app/node_modules
+      - ./frontend/src:/usr/src/app/frontend/src
+
 
 
   mongodb:
