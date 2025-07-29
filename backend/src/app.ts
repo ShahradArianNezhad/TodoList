@@ -90,9 +90,17 @@ app.post('/api/user/login',async(req:Request,res:Response)=>{
     return res.status(200).json({token})
 })
 
+app.post('/api/user/auth',async(req:Request,res:Response)=>{
+
+    const jwt = req.cookies.jwt
+
+    if(!jwt){
+        return res.json()
+    }
 
 
 
+})
 
 
 
