@@ -28,5 +28,3 @@ services:
     volumes:
       - ./backend/db:/data/db
 
-# volumes:
-#   mongodb_data:

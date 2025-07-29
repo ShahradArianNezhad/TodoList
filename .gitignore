@@ -1,6 +1,6 @@
 backend/node_modules
 backend/dist
-
+db/
 .vscode/*
 !.vscode/extensions.json
 .idea
