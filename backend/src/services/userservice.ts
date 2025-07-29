@@ -93,12 +93,12 @@ export const authenticateUser=async(userdata:IUserInput)=>{
     try{
         const user = await User.findOne({username : userdata.username})
         if(!user){
-            return "no user"
+            return null
         }
 
         const isMatch = await bcrypt.compare(userdata.password,user.password)
         if(!isMatch){
-            return "no pass"
+            return null
         }
 
         return user
@@ -106,6 +106,6 @@ export const authenticateUser=async(userdata:IUserInput)=>{
 
 
     }catch(err){
-        return err
+        return null
     }
 }

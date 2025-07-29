@@ -4,6 +4,7 @@ import { authenticateUser, createUser, getAllUsers, getUserByName } from './serv
 import jwt from 'jsonwebtoken';
 import { IUser } from './interfaces/user.interface';
 import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser'
 
 const app:Application = express();
 
@@ -16,9 +17,10 @@ const PORT = process.env.PORT || 3000;
 
 
 app.use(express.json())
+app.use(cookieParser())
 
 
-const authenticateToken=(req:Request,res:Response,next:NextFunction)=>{
+const authenticateToken=async(req:Request,res:Response,next:NextFunction)=>{
     let token:string|undefined
     const authHeader = req.headers['authorization']
     if(!authHeader){
@@ -44,26 +46,32 @@ app.get('/',authenticateToken,(req:Request,res:Response)=>{
 })
 
 
-app.get('api/user/get',async(req:Request,res:Response)=>{
+app.get('/api/user/get',async(req:Request,res:Response)=>{
     const result = await getAllUsers()
     res.send(result)
 })
 
 
 app.post('/api/user/register',async(req:Request,res:Response)=>{
-    const username = req.body.username
-    const password = req.body.password
+
+    const {username , password} = req.body
+
     const user = await createUser({username:username,password:password})
     if(!user){
         return res.sendStatus(409)
     }
     const token = jwt.sign({userId:user.id},process.env.JWT_SECRET!,{expiresIn:'1h'})
+    res.cookie('jwt',token,{
+        httpOnly:true,
+        maxAge:3600000
+    })
     return res.status(200).json({token})
 })
 
 app.post('/api/user/login',async(req:Request,res:Response)=>{
-    const username = req.body.username
-    const password = req.body.password
+    
+    const {username , password} = req.body
+    
     const user = await authenticateUser({username:username,password:password}) as IUser
     if(!user){
         return res.sendStatus(401)
