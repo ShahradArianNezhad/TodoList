@@ -1,17 +1,16 @@
 import { Navigate } from "react-router-dom"
+import Navbar from "../../components/Navbar"
 
 
-const Home = async() => {
+const Home = () => {
   
-  fetch("http://localhost:8000/api/user/auth")
-  .then((e)=>{
-    console.log(e)
-  })
-
 
 
   return (
-    <div>Home</div>
+    <div className="w-screen h-screen bg-[#FDFBD4]">
+      <Navbar/>
+      <p>x</p>
+    </div>
   )
 }
 

@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import { IUser } from './interfaces/user.interface';
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import cors from "cors"
+import cookieInterface from './interfaces/cookie.interface'
 
 const app:Application = express();
 
@@ -15,7 +17,17 @@ connectDB()
 const PORT = process.env.PORT || 3000;
 
 
+const corsOptions={
+    origin:'http://localhost:5173',
+    credentials:true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
 
+
+
+
+
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 
@@ -53,7 +65,6 @@ app.get('/api/user/get',async(req:Request,res:Response)=>{
 
 
 app.post('/api/user/register',async(req:Request,res:Response)=>{
-
     const {username , password}:{username:string|undefined,password:string|undefined} = req.body
     if(!password||!username){
         return res.sendStatus(409)
@@ -63,7 +74,7 @@ app.post('/api/user/register',async(req:Request,res:Response)=>{
     if(!user){
         return res.sendStatus(409)
     }
-    const token = jwt.sign({userId:user.id},process.env.JWT_SECRET!,{expiresIn:'1h'})
+    const token = jwt.sign({username:user.username},process.env.JWT_SECRET!,{expiresIn:'1h'})
     res.cookie('jwt',token,{
         httpOnly:true,
         maxAge:3600000
@@ -82,22 +93,32 @@ app.post('/api/user/login',async(req:Request,res:Response)=>{
     if(!user){
         return res.sendStatus(401)
     }
-    const token = jwt.sign({userId:user.id},process.env.JWT_SECRET!,{expiresIn:'1h'})
+    const token = jwt.sign({username:user.username},process.env.JWT_SECRET!,{expiresIn:'1h'})
     res.cookie('jwt',token,{
         httpOnly:true,
-        maxAge:3600000
+        maxAge:3600000,
+        sameSite:'none',
+        secure:true
     })
-    return res.status(200).json({token})
+    return res.status(200).json({token}).send()
 })
 
 app.get('/api/user/auth',async(req:Request,res:Response)=>{
-
-    const jwt = req.cookies.jwt
-
-    if(!jwt){
-        return res.json({"status":"ok"})
+    const jwt_cookie = req.cookies.jwt
+    const mydata = jwt.decode(jwt_cookie) as cookieInterface|null;
+    if(!mydata){
+        return res.json({"status":"unauthorized"})
     }
-    return res.json({"status":"unauthorized"})
+
+    
+
+    
+
+    if(!jwt_cookie){
+        return res.json({"status":"unauthorized"})
+    }
+
+    return res.json({"status":"authorized","username":mydata.username})
 
 
 
