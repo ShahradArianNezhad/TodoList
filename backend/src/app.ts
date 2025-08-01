@@ -7,8 +7,10 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import cors from "cors"
 import cookieInterface from './interfaces/cookie.interface'
+import userRouter from './routes/user.router';
 
 const app:Application = express();
+
 
 dotenv.config()
 
@@ -30,6 +32,7 @@ const corsOptions={
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
+app.use('/user',userRouter)
 
 
 const authenticateToken=async(req:Request,res:Response,next:NextFunction)=>{
@@ -57,72 +60,6 @@ app.get('/',authenticateToken,(req:Request,res:Response)=>{
     res.send("hello from server")
 })
 
-
-app.get('/api/user/get',async(req:Request,res:Response)=>{
-    const result = await getAllUsers()
-    res.send(result)
-})
-
-
-app.post('/api/user/register',async(req:Request,res:Response)=>{
-    const {username , password}:{username:string|undefined,password:string|undefined} = req.body
-    if(!password||!username){
-        return res.sendStatus(409)
-    }
-
-    const user = await createUser({username:username,password:password})
-    if(!user){
-        return res.sendStatus(409)
-    }
-    const token = jwt.sign({username:user.username},process.env.JWT_SECRET!,{expiresIn:'1h'})
-    res.cookie('jwt',token,{
-        httpOnly:true,
-        maxAge:3600000
-    })
-    return res.status(200).json({token})
-})
-
-app.post('/api/user/login',async(req:Request,res:Response)=>{
-    
-    const {username , password}:{username:string|undefined,password:string|undefined} = req.body
-    if(!password||!username){
-        return res.sendStatus(409)
-    }
-
-    const user = await authenticateUser({username:username,password:password}) as IUser
-    if(!user){
-        return res.sendStatus(401)
-    }
-    const token = jwt.sign({username:user.username},process.env.JWT_SECRET!,{expiresIn:'1h'})
-    res.cookie('jwt',token,{
-        httpOnly:true,
-        maxAge:3600000,
-        sameSite:'none',
-        secure:true
-    })
-    return res.status(200).json({token}).send()
-})
-
-app.get('/api/user/auth',async(req:Request,res:Response)=>{
-    const jwt_cookie = req.cookies.jwt
-    const mydata = jwt.decode(jwt_cookie) as cookieInterface|null;
-    if(!mydata){
-        return res.json({"status":"unauthorized"})
-    }
-
-    
-
-    
-
-    if(!jwt_cookie){
-        return res.json({"status":"unauthorized"})
-    }
-
-    return res.json({"status":"authorized","username":mydata.username})
-
-
-
-})
 
 
 

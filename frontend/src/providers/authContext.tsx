@@ -12,7 +12,7 @@ export const AuthContext = createContext<AuthInterface|undefined>(undefined);
 
 const register = async()=>{
 
-    await fetch("http://localhost:8000/api/user/login",{
+    await fetch("http://localhost:8000/user/login",{
         method:"POST",
         headers:{
             'Content-Type':'application/json'
@@ -38,7 +38,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const auth = async()=>{
-            const res = await fetch("http://localhost:8000/api/user/auth",{
+            const res = await fetch("http://localhost:8000/user/auth",{
                 method:'GET',
                 headers:{
                     'Content-Type': 'application/json'
