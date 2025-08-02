@@ -1,5 +1,5 @@
 import Navbar from "../../../components/Navbar"
-import { Link } from 'react-router-dom';
+import { Link, type NavigateFunction } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
