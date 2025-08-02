@@ -1,15 +1,21 @@
-import { Navigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import Navbar from "../../components/Navbar"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { AuthContext } from "../../providers/authContext"
 
 
 const Home = () => {
+  const nav = useNavigate()
   const x= useContext(AuthContext)
+
+  useEffect(()=>{
   if(!x?.auth){
-    <Navigate to="/login" replace/>
+    nav("/login")
   }
-  console.log(x?.auth)
+  })
+
+
+
 
   return (
     <div className="w-screen h-screen bg-[#FDFBD4]">
