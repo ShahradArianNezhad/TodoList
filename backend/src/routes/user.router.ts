@@ -79,5 +79,22 @@ userRouter.get('/auth',async(req:Request,res:Response)=>{
 
 })
 
+userRouter.get('/logout',async(req:Request,res:Response)=>{
+
+    res.cookie('jwt',"",{
+        httpOnly:true,
+        secure:true,
+        sameSite:'none'
+    })
+
+    return res.json({"status":"ok"})
+
+
+
+})
+
+
+
+
 
 export default userRouter

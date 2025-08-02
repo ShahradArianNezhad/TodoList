@@ -54,8 +54,6 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
                 console.log("unauth")
             }
     }
-
-    register()
     auth()
 
     return(
