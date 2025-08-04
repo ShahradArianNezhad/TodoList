@@ -1,13 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
-import { AuthContext } from '../providers/authContext';
+import {useState } from 'react';
+import { Link} from 'react-router-dom'; 
 import User from './User';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
 
-  const authContext = useContext(AuthContext)
 
   
 
@@ -104,18 +102,6 @@ const Navbar = () => {
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
               About
-            </Link>
-            <Link
-              to="/services"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Services
-            </Link>
-            <Link
-              to="/contact"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            >
-              Contact
             </Link>
           </div>
         </div>

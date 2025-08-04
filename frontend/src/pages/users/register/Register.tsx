@@ -1,8 +1,8 @@
 import Navbar from "../../../components/Navbar"
 import { Link, type NavigateFunction } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { AuthContext, type AuthInterface } from "../../../providers/authContext";
+import { useState } from "react";
+import { type AuthInterface } from "../../../providers/authContext";
 
 const registerBackend = async(username:string,password:string,navigate:NavigateFunction,context?:AuthInterface)=>{
 
@@ -35,7 +35,6 @@ const Register = () => {
   const [username,setUsername] = useState("")
   const [password,setPassword]= useState("")
 
-  const context=useContext(AuthContext)
 
 
 

@@ -2,11 +2,10 @@ import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../../providers/authContext"
 
-type Props = {}
 
 
 const logout = async()=>{
-    const res = await fetch("http://localhost:8000/user/logout",{
+    await fetch("http://localhost:8000/user/logout",{
         method:"GET",
         headers:{
             'Content-Type': 'application/json'
@@ -18,7 +17,7 @@ const logout = async()=>{
 
 
 
-const Logout = (props: Props) => {
+const Logout = () => {
     const navigate = useNavigate()
     const context= useContext(AuthContext)
     

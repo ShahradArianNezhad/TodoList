@@ -13,20 +13,20 @@ export interface AuthInterface{
 
 export const AuthContext = createContext<AuthInterface|undefined>(undefined);
 
-const register = async()=>{
+// const register = async()=>{
 
-    await fetch("http://localhost:8000/user/login",{
-        method:"POST",
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-            username:"allahhhhh3",
-            password:"129121271212"
-        }),
-        credentials:'include'
-    })
-}
+//     await fetch("http://localhost:8000/user/login",{
+//         method:"POST",
+//         headers:{
+//             'Content-Type':'application/json'
+//         },
+//         body:JSON.stringify({
+//             username:"allahhhhh3",
+//             password:"129121271212"
+//         }),
+//         credentials:'include'
+//     })
+// }
 
 
 
