@@ -1,7 +1,4 @@
-import { useContext } from "react"
-import { AuthContext } from "../../../providers/authContext"
-import Cookies from 'js-cookie';
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 type Props = {}
 
@@ -20,12 +17,16 @@ const logout = async()=>{
 
 
 const Logout = (props: Props) => {
-
+    const navigate = useNavigate()
     logout()
+    navigate("/")
+    navigate(0)
 
   return (
     <div>
-        <Navigate to="/" replace/>
+        
+        
+        
     </div>
   )
 }

@@ -22,6 +22,7 @@ const registerBackend = async(username:string,password:string,navigate:NavigateF
     return 0;
   }else{
     navigate("/")
+    navigate(0)
   }
 }
 

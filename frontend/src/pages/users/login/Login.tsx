@@ -22,6 +22,7 @@ const loginBackend = async(username:string,password:string,navigate:NavigateFunc
     return 0;
   }else{
     navigate("/")
+    navigate(0)
   }
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import { AuthContext } from '../providers/authContext';
 
@@ -7,6 +7,9 @@ const Navbar = () => {
 
 
   const authContext = useContext(AuthContext)
+
+  
+
 
   return (
     <nav className="bg-gray-800 sticky top-0">
@@ -40,9 +43,9 @@ const Navbar = () => {
             <p className='text-white font-bold text-lg'>{authContext?.username}</p> 
             : <>
                 <div className='flex flex-row'>
-                  <Link to="login" className='text-white font-bold text-lg'>login</Link>
+                  <Link to="/login" className='text-white font-bold text-lg'>login</Link>
                   <p className='text-white font-bold text-lg mx-1'>|</p>
-                  <Link to="register" className='text-white font-bold text-lg '>register</Link>
+                  <Link to="/register" className='text-white font-bold text-lg '>register</Link>
                 </div>
               </>
 
