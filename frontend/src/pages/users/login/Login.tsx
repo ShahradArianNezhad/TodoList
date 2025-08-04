@@ -27,8 +27,7 @@ const loginBackend = async(username:string,password:string,navigate:NavigateFunc
   if (!(await res.json()).token){
     return 0;
   }else{
-    context?.setAuth(true)
-    context?.setUseranme(username)
+    context?.authCall()
     navigate("/")
     
   }

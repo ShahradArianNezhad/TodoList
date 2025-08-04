@@ -10,7 +10,8 @@ export interface AuthInterface{
     setAuth:React.Dispatch<React.SetStateAction<boolean>>,
     loading:boolean,
     TaskList?:Array<recievedTask>,
-    setTaskList?:React.Dispatch<React.SetStateAction<Array<recievedTask> | undefined>>
+    setTaskList?:React.Dispatch<React.SetStateAction<Array<recievedTask> | undefined>>,
+    authCall:() => Promise<void>
 
 }
 
@@ -31,9 +32,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     const [loading,setIsLoading]= useState(true)
     const [taskList,setTaskList]= useState<Array<recievedTask>>()
 
-
-    useEffect(()=>{
-        const auth = async()=>{
+    const auth = async()=>{
                 const res = await fetch("http://localhost:8000/user/auth",{
                     method:'GET',
                     headers:{
@@ -51,12 +50,17 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
                     console.log("unauth")
                 }
                 setIsLoading(false)
-        }
+    }
+
+
+
+    useEffect(()=>{
+        
         auth()
     },[])
 
     return(
-        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading,TaskList:taskList,setTaskList:setTaskList}}>
+        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading,TaskList:taskList,setTaskList:setTaskList,authCall:auth}}>
             {children}
         </AuthContext.Provider>
     )

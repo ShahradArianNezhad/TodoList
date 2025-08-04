@@ -22,8 +22,7 @@ const registerBackend = async(username:string,password:string,navigate:NavigateF
   if (!(await res.json()).token){
     return 0;
   }else{
-    context?.setAuth(true)
-    context?.setUseranme(username)
+    context?.authCall()
     navigate("/")
   }
 }
