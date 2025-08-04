@@ -1,6 +1,6 @@
 
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import type { recievedTask, recievedTaskArr } from "../interfaces/taskRecv";
+import type { recievedTask } from "../interfaces/taskRecv";
 
 
 export interface AuthInterface{
@@ -9,8 +9,8 @@ export interface AuthInterface{
     auth:boolean,
     setAuth:React.Dispatch<React.SetStateAction<boolean>>,
     loading:boolean,
-    TaskList?:recievedTaskArr,
-    setTaskList?:React.Dispatch<React.SetStateAction<recievedTaskArr | undefined>>
+    TaskList?:Array<recievedTask>,
+    setTaskList?:React.Dispatch<React.SetStateAction<Array<recievedTask> | undefined>>
 
 }
 
@@ -29,7 +29,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     const [user, setUser] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading,setIsLoading]= useState(true)
-    const [taskList,setTaskList]= useState<recievedTaskArr>()
+    const [taskList,setTaskList]= useState<Array<recievedTask>>()
 
 
     useEffect(()=>{
