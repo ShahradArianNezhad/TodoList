@@ -33,7 +33,7 @@ const Logout = () => {
         performLogout()
     })
 
-
+    return<></>
 
 
 }
