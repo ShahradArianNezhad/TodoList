@@ -60,6 +60,7 @@ userRouter.post('/login',async(req:Request,res:Response)=>{
 })
 
 userRouter.get('/auth',async(req:Request,res:Response)=>{
+    let sentTasks = null;
     const jwt_cookie = req.cookies.jwt
     const mydata = jwt.decode(jwt_cookie) as cookieInterface|null;
     if(!mydata){
@@ -70,11 +71,16 @@ userRouter.get('/auth',async(req:Request,res:Response)=>{
         return res.json({"status":"unauthorized"})
     }
     const recvTasks = await getTasks(mydata.username)
+    if(recvTasks){
+    sentTasks = recvTasks.map(({task,createDate,todoDate,done})=>({task ,createDate ,todoDate, done}))
+    }else{
+        sentTasks = recvTasks
+    }
 
     
     
 
-    return res.json({"status":"authorized","username":mydata.username,"tasks":recvTasks})
+    return res.json({"status":"authorized","username":mydata.username,"tasks":sentTasks})
 
 
 

@@ -5,9 +5,11 @@ import { createContext, useState, type ReactNode } from "react";
 export interface AuthInterface{
     username:string|null,
     setUseranme:React.Dispatch<React.SetStateAction<string>>,
-    setAuth:React.Dispatch<React.SetStateAction<boolean>>,
     auth:boolean,
-    loading:boolean
+    setAuth:React.Dispatch<React.SetStateAction<boolean>>,
+    loading:boolean,
+    tasks
+
 }
 
 
