@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'; 
+import { AuthContext } from '../providers/authContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+
+  const authContext = useContext(AuthContext)
 
   return (
     <nav className="bg-gray-800 sticky top-0">
@@ -28,20 +32,11 @@ const Navbar = () => {
                 >
                   About
                 </Link>
-                <Link
-                  to="/services"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Services
-                </Link>
-                <Link
-                  to="/contact"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Contact
-                </Link>
               </div>
             </div>
+          </div>
+          <div>
+            <p className='text-white font-bold text-lg'>{authContext?.username}</p>
           </div>
 
           {/* Mobile menu button */}
