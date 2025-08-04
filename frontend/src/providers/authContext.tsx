@@ -1,5 +1,5 @@
 
-import { createContext, useState, type ReactNode } from "react";
+import { createContext, useEffect, useState, type ReactNode } from "react";
 import type { recievedTask, recievedTaskArr } from "../interfaces/taskRecv";
 
 
@@ -31,6 +31,8 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     const [loading,setIsLoading]= useState(true)
     const [taskList,setTaskList]= useState<recievedTaskArr>()
 
+
+    useEffect(()=>{
         const auth = async()=>{
                 const res = await fetch("http://localhost:8000/user/auth",{
                     method:'GET',
@@ -51,7 +53,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
                 setIsLoading(false)
         }
         auth()
-
+    },[])
 
     return(
         <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading,TaskList:taskList,setTaskList:setTaskList}}>
