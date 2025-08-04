@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Navbar from "../../../components/Navbar"
 import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
+import { AuthContext, type AuthInterface } from "../../../providers/authContext";
 
 
-const loginBackend = async(username:string,password:string,navigate:NavigateFunction)=>{
+
+const loginBackend = async(username:string,password:string,navigate:NavigateFunction,context?:AuthInterface)=>{
+
+  
+
+
 
 
   const res = await fetch("http://localhost:8000/user/login",{
@@ -21,8 +27,10 @@ const loginBackend = async(username:string,password:string,navigate:NavigateFunc
   if (!(await res.json()).token){
     return 0;
   }else{
+    context?.setAuth(true)
+    context?.setUseranme(username)
     navigate("/")
-    navigate(0)
+    
   }
 }
 
@@ -35,6 +43,7 @@ const Login = () => {
 
   const [username,setUsername] = useState("")
   const [password,setPassword]= useState("")
+  const context= useContext(AuthContext)
 
 
 
@@ -46,7 +55,7 @@ const Login = () => {
             <form className="flex justify-around items-center flex-col w-full h-[60%]">
                 <input value={username} onChange={(e)=>{setUsername(e.target.value)}} type="text" name="username" id="username" placeholder="Username" className="bg-gray-900 w-70 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 "/>
                 <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="text" name="password" id="password" placeholder="Password" className="bg-gray-900 w-70 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100"/>
-                <button onClick={()=>{loginBackend(username,password,navigate)}} type="button" className="font-medium tracking-wide bg-gray-900 w-70 px-3 py-2 outline-0 rounded-md text-gray-400 mt-5 mb-4 cursor-pointer shadow-black shadow-sm hover:shadow-md transition-all duration-100">Login</button>
+                <button onClick={()=>{loginBackend(username,password,navigate,context)}} type="button" className="font-medium tracking-wide bg-gray-900 w-70 px-3 py-2 outline-0 rounded-md text-gray-400 mt-5 mb-4 cursor-pointer shadow-black shadow-sm hover:shadow-md transition-all duration-100">Login</button>
                 <span className="text-sm text-gray-400 tracking-wide font-medium">Dont have an account? <Link to="/register" className="text-blue-300 hover:text-blue-400 transition-all duration-200 underline-offset-3 underline cursor-pointer">Register</Link> </span>
             </form>
         </div>

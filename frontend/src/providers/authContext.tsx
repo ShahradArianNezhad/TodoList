@@ -2,8 +2,10 @@
 import { createContext, useState, type ReactNode } from "react";
 
 
-interface AuthInterface{
+export interface AuthInterface{
     username:string|null,
+    setUseranme:React.Dispatch<React.SetStateAction<string>>,
+    setAuth:React.Dispatch<React.SetStateAction<boolean>>,
     auth:boolean,
     loading:boolean
 }
@@ -35,7 +37,7 @@ const register = async()=>{
 
 export const AuthProvider = ({children}:{children:ReactNode})=>{
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading,setIsLoading]= useState(true)
 
@@ -61,7 +63,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
 
 
     return(
-        <AuthContext.Provider value={{username:user,auth:isAuthenticated,loading:loading}}>
+        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading}}>
             {children}
         </AuthContext.Provider>
     )

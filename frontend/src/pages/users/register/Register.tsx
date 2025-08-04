@@ -1,9 +1,10 @@
 import Navbar from "../../../components/Navbar"
 import { Link, type NavigateFunction } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext, type AuthInterface } from "../../../providers/authContext";
 
-const registerBackend = async(username:string,password:string,navigate:NavigateFunction)=>{
+const registerBackend = async(username:string,password:string,navigate:NavigateFunction,context?:AuthInterface)=>{
 
 
   const res = await fetch("http://localhost:8000/user/register",{
@@ -21,8 +22,9 @@ const registerBackend = async(username:string,password:string,navigate:NavigateF
   if (!(await res.json()).token){
     return 0;
   }else{
+    context?.setAuth(true)
+    context?.setUseranme(username)
     navigate("/")
-    navigate(0)
   }
 }
 
@@ -32,6 +34,8 @@ const Register = () => {
 
   const [username,setUsername] = useState("")
   const [password,setPassword]= useState("")
+
+  const context=useContext(AuthContext)
 
 
 

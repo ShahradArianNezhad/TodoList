@@ -1,4 +1,6 @@
+import { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../../../providers/authContext"
 
 type Props = {}
 
@@ -18,17 +20,23 @@ const logout = async()=>{
 
 const Logout = (props: Props) => {
     const navigate = useNavigate()
-    logout()
-    navigate("/")
-    navigate(0)
+    const context= useContext(AuthContext)
+    
+    useEffect(()=>{
 
-  return (
-    <div>
-        
-        
-        
-    </div>
-  )
+        const performLogout = async()=>{
+            await logout()
+            context?.setAuth(false)
+            context?.setUseranme('')
+            navigate("/")
+
+        }
+        performLogout()
+    })
+
+
+
+
 }
 
 export default Logout
