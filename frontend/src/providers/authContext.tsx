@@ -8,7 +8,6 @@ export interface AuthInterface{
     auth:boolean,
     setAuth:React.Dispatch<React.SetStateAction<boolean>>,
     loading:boolean,
-    tasks
 
 }
 
@@ -55,6 +54,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
             if (result.status == "authorized"){
                 setIsAuthenticated(true)
                 setUser(result.username)
+                console.log(result.tasks[0])
                 console.log("auth")
             }else{
                 console.log("unauth")
