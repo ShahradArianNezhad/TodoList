@@ -36,7 +36,18 @@ const Navbar = () => {
             </div>
           </div>
           <div>
-            <p className='text-white font-bold text-lg'>{authContext?.username}</p>
+            {authContext?.username ? 
+            <p className='text-white font-bold text-lg'>{authContext?.username}</p> 
+            : <>
+                <div className='flex flex-row'>
+                  <Link to="login" className='text-white font-bold text-lg'>login</Link>
+                  <p className='text-white font-bold text-lg mx-1'>|</p>
+                  <Link to="register" className='text-white font-bold text-lg '>register</Link>
+                </div>
+              </>
+
+            }
+            
           </div>
 
           {/* Mobile menu button */}
