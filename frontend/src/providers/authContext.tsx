@@ -11,7 +11,7 @@ export interface AuthInterface{
     loading:boolean,
     TaskList?:Array<recievedTask>,
     setTaskList?:React.Dispatch<React.SetStateAction<Array<recievedTask> | undefined>>,
-    authCall:() => Promise<void>
+    refresh:() => Promise<void>
 
 }
 
@@ -60,7 +60,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     },[])
 
     return(
-        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading,TaskList:taskList,setTaskList:setTaskList,authCall:auth}}>
+        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading,TaskList:taskList,setTaskList:setTaskList,refresh:auth}}>
             {children}
         </AuthContext.Provider>
     )
