@@ -36,6 +36,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
 
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loading,setIsLoading]= useState(true)
 
     const auth = async()=>{
             const res = await fetch("http://localhost:8000/user/auth",{
@@ -53,16 +54,21 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
             }else{
                 console.log("unauth")
             }
+            setIsLoading(false)
     }
     auth()
 
-    return(
-        <AuthContext.Provider value={{username:user,auth:isAuthenticated}}>
-            {children}
-        </AuthContext.Provider>
-    )
-
-
+    if(!loading){
+        return(
+            <AuthContext.Provider value={{username:user,auth:isAuthenticated}}>
+                {children}
+            </AuthContext.Provider>
+        )
+    }else{
+        return(
+            <h1>ALLAH</h1>
+        )
+    }
 }
 
 
