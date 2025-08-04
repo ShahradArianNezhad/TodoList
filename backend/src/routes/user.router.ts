@@ -5,6 +5,7 @@ import { IUser } from '../interfaces/user.interface';
 import cookieInterface from '../interfaces/cookie.interface'
 import cookieParser from 'cookie-parser'
 import cors from "cors"
+import { createTask, getTasks } from '../services/taskservice';
 
 
 const userRouter = express.Router()
@@ -65,15 +66,15 @@ userRouter.get('/auth',async(req:Request,res:Response)=>{
         return res.json({"status":"unauthorized"})
     }
 
-    
-
-    
-
     if(!jwt_cookie){
         return res.json({"status":"unauthorized"})
     }
+    const recvTasks = await getTasks(mydata.username)
 
-    return res.json({"status":"authorized","username":mydata.username})
+    
+    
+
+    return res.json({"status":"authorized","username":mydata.username,"tasks":recvTasks})
 
 
 
@@ -88,9 +89,6 @@ userRouter.get('/logout',async(req:Request,res:Response)=>{
     })
 
     return res.json({"status":"ok"})
-
-
-
 })
 
 
