@@ -4,7 +4,8 @@ import { createContext, useState, type ReactNode } from "react";
 
 interface AuthInterface{
     username:string|null,
-    auth:boolean
+    auth:boolean,
+    loading:boolean
 }
 
 
@@ -58,17 +59,13 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     }
     auth()
 
-    if(!loading){
-        return(
-            <AuthContext.Provider value={{username:user,auth:isAuthenticated}}>
-                {children}
-            </AuthContext.Provider>
-        )
-    }else{
-        return(
-            <h1>ALLAH</h1>
-        )
-    }
+
+    return(
+        <AuthContext.Provider value={{username:user,auth:isAuthenticated,loading:loading}}>
+            {children}
+        </AuthContext.Provider>
+    )
+
 }
 
 

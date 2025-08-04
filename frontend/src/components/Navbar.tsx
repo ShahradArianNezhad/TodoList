@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import { AuthContext } from '../providers/authContext';
+import User from './User';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,20 +39,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div>
-            {authContext?.username ? 
-            <p className='text-white font-bold text-lg'>{authContext?.username}</p> 
-            : <>
-                <div className='flex flex-row'>
-                  <Link to="/login" className='text-white font-bold text-lg'>login</Link>
-                  <p className='text-white font-bold text-lg mx-1'>|</p>
-                  <Link to="/register" className='text-white font-bold text-lg '>register</Link>
-                </div>
-              </>
-
-            }
-            
-          </div>
+          <User/>
 
           {/* Mobile menu button */}
           <div className="-mr-2 flex md:hidden">
