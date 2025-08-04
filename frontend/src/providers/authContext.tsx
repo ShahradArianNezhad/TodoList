@@ -1,5 +1,6 @@
 
 import { createContext, useState, type ReactNode } from "react";
+import type { recievedTask, recievedTaskArr } from "../interfaces/taskRecv";
 
 
 export interface AuthInterface{
@@ -8,6 +9,8 @@ export interface AuthInterface{
     auth:boolean,
     setAuth:React.Dispatch<React.SetStateAction<boolean>>,
     loading:boolean,
+    TaskList?:recievedTaskArr,
+    setTaskList?:React.Dispatch<React.SetStateAction<recievedTaskArr | undefined>>
 
 }
 
@@ -41,6 +44,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
     const [user, setUser] = useState('');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading,setIsLoading]= useState(true)
+    const [taskList,setTaskList]= useState<recievedTaskArr>()
 
     const auth = async()=>{
             const res = await fetch("http://localhost:8000/user/auth",{
@@ -54,7 +58,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
             if (result.status == "authorized"){
                 setIsAuthenticated(true)
                 setUser(result.username)
-                console.log(result.tasks[0])
+                setTaskList(result.tasks)
                 console.log("auth")
             }else{
                 console.log("unauth")
@@ -65,7 +69,7 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
 
 
     return(
-        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading}}>
+        <AuthContext.Provider value={{username:user,setUseranme:setUser,auth:isAuthenticated,setAuth:setIsAuthenticated,loading:loading,TaskList:taskList,setTaskList:setTaskList}}>
             {children}
         </AuthContext.Provider>
     )
