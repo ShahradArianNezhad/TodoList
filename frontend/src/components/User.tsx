@@ -28,16 +28,13 @@ const User = () => {
 
   const [isOpen,setIsOpen]= useState(false)
 
-    const performLogout = async()=>{
-            await logout()
-            if(context){
-            context.setAuth(false)
-            context.setUseranme('')
-            context.setTaskList=undefined
-            }
-            nav("/")
-
-    }
+  const performLogout = async()=>{
+        await logout()
+        if(context){
+        await context.refresh()
+        }
+        nav("/")
+  }
 
 
 
@@ -51,7 +48,7 @@ const User = () => {
                     {authContext?.username ? 
                     <p className='text-white font-bold text-lg'>{authContext?.username}</p> 
                     : <>
-                        <div className='flex flex-row]'>
+                        <div className='flex flex-row '>
                         <Link to="/login" className='text-white font-bold text-lg'>login</Link>
                         <p className='text-white font-bold text-lg mx-1'>|</p>
                         <Link to="/register" className='text-white font-bold text-lg '>register</Link>
@@ -70,13 +67,13 @@ const User = () => {
     <div>
             {authContext?.username ? 
             <div className='relative flex justify-center'>
-              {isOpen ? (<div className='absolute text-white cursor-pointer font-bold text-md top-10 bg-gray-800 w-15 h-12 flex justify-center items-center rounded-b-xl transition-all duration-200'><button onClick={performLogout}>logout</button ></div>):(
+              {isOpen ? (<div className='absolute text-white cursor-pointer font-bold text-md top-10 bg-gray-800 w-15 h-12 flex justify-center items-center rounded-b-xl transition-all duration-200'><button className='cursor-pointer' onClick={performLogout}>logout</button ></div>):(
                 <div className='absolute text-white cursor-pointer font-bold text-md top-10 bg-gray-800 w-15 h-12 flex justify-center items-center rounded-b-xl transition-all duration-150 opacity-0'><p>logout</p></div>
               )}
               <button onClick={()=>{setIsOpen(!isOpen)}} className='text-white cursor-pointer font-bold text-lg'>{authContext?.username}</button> 
             </div>
             : <>
-                <div className='flex flex-row]'>
+                <div className='flex flex-row cursor-pointer'>
                   <Link to="/login" className='text-white font-bold text-lg'>login</Link>
                   <p className='text-white font-bold text-lg mx-1'>|</p>
                   <Link to="/register" className='text-white font-bold text-lg '>register</Link>

@@ -47,6 +47,9 @@ export const AuthProvider = ({children}:{children:ReactNode})=>{
                     setTaskList(result.tasks)
                     console.log("auth")
                 }else{
+                    setIsAuthenticated(false)
+                    setUser('')
+                    setTaskList(undefined)
                     console.log("unauth")
                 }
                 setIsLoading(false)
