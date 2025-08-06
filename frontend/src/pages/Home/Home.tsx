@@ -55,6 +55,9 @@ const Home = () => {
 
 
     }
+
+    DelHandler = (task:recievedTask)=>{}
+
   }
 
 

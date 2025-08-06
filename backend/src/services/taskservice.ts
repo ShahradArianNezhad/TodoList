@@ -79,7 +79,7 @@ export const deleteTask = async(task:InputItask)=>{
         return null
     }
 
-    return await foundTask.deleteOne()   
+    return await foundTask.deleteOne()  
 
 
 

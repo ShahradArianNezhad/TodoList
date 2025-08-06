@@ -4,7 +4,8 @@ import jwt from "jsonwebtoken"
 import { User } from "../models/user. model"
 import cookieInterface from "../interfaces/cookie.interface"
 import { Task } from "../models/task.model"
-import { createTask } from "../services/taskservice"
+import { createTask, deleteTask } from "../services/taskservice"
+import { InputItask } from "../interfaces/task.interface"
 
 
 
@@ -48,4 +49,35 @@ TaskRouter.post("/create",async(req:Request,res:Response)=>{
     }else{
         
     }
+})
+
+
+
+
+TaskRouter.delete("/delete",async(req:Request,res:Response)=>{
+
+
+    const {task,todoDate,createDate,done}
+    :{task:string,todoDate:string,createDate:string,done:boolean}
+    = req.body
+
+    const jwt_cookie = req.cookies.jwt
+
+    const verified = jwt.verify(jwt_cookie,process.env.JWT_SECRET!)
+    const jwtData = jwt.decode(jwt_cookie) as cookieInterface
+    if(!jwtData || !verified){
+        res.json({"status":"not logged in"})
+    }
+    const username = jwtData.username
+
+
+    if(verified){
+        const userid = (await User.findOne({username:username}))?.id
+        const temptask:InputItask={task:task,createDate:createDate,done:done,todoDate:todoDate,user:userid}
+        const res = deleteTask(temptask)
+        console.log("success")
+    }
+
+
+    
 })
