@@ -3,7 +3,7 @@ import { useContext, useState } from "react"
 import Navbar from "../../components/Navbar"
 import { AuthContext } from "../../providers/authContext"
 import type { recievedTask } from "../../interfaces/taskRecv"
-import trash from "../../assets/trash.svg"
+import trash from "../../assets/trash-can.svg"
 
 
 
@@ -15,6 +15,7 @@ const Home = () => {
   const [task,setTask] = useState("")
   const [date,setDate] = useState("")
   let handlerFunc = ()=>{}
+  let DelHandler = ()=>{}
 
   //for not logged in
   const [tempTasks,setTempTasks] = useState<Array<recievedTask>>([])
@@ -26,6 +27,7 @@ const Home = () => {
       setTempTasks([...tempTasks,{task:task,todoDate:date,createDate:createdDate,done:false}])
       console.log(tempTasks)
     }
+
   }else{
     handlerFunc = ()=>{
 
@@ -50,6 +52,9 @@ const Home = () => {
 
     }
   }
+
+
+
 
   return (
     <div className="w-screen bg-[#FDFBD4]">
@@ -77,7 +82,7 @@ const Home = () => {
                   status: {task.done ? "done" : 'not done'}
                 </button>
                 <button className="flex justify-center items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
-                  <img src={trash} alt="delete" className="w-[30%] text-white" />
+                  <img src={trash} alt="delete" className="w-6 text-white" />
                 </button>
               </div>
               
@@ -105,6 +110,9 @@ const Home = () => {
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   status: {task.done ? "done" : 'not done'}
+                </button>
+                <button className="flex justify-center items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
+                  <img src={trash} alt="delete" className="w-6 text-white" />
                 </button>
               </div>
               
