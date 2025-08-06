@@ -44,6 +44,7 @@ const Home = () => {
         console.log(await (res.json()))
       }
       makeCreateReq()
+      context.refresh()
 
 
 
@@ -51,9 +52,9 @@ const Home = () => {
   }
 
   return (
-    <div className="w-screen h-screen bg-[#FDFBD4]">
+    <div className="w-screen bg-[#FDFBD4]">
       <Navbar/>
-      <div className=" flex items-center justify-center flex-col">
+      <div className=" flex items-center justify-center flex-col mb-50">
         {context && context?.TaskList ? (
           <>
             <div className="text-slate-800 text-2xl font-bold m-8">
