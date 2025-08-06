@@ -3,7 +3,7 @@ import { useContext, useState } from "react"
 import Navbar from "../../components/Navbar"
 import { AuthContext } from "../../providers/authContext"
 import type { recievedTask } from "../../interfaces/taskRecv"
-
+import trash from "../../assets/trash.svg"
 
 
 
@@ -76,8 +76,8 @@ const Home = () => {
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   status: {task.done ? "done" : 'not done'}
                 </button>
-                <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
-                  x
+                <button className="flex justify-center items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
+                  <img src={trash} alt="delete" className="w-[30%] text-white" />
                 </button>
               </div>
               
