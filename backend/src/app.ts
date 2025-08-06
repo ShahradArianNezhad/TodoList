@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 import cors from "cors"
 import cookieInterface from './interfaces/cookie.interface'
 import userRouter from './routes/user.router';
+import { TaskRouter } from './routes/task.router';
 
 const app:Application = express();
 
@@ -33,6 +34,7 @@ app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/user',userRouter)
+app.use('/api/task',TaskRouter)
 
 
 const authenticateToken=async(req:Request,res:Response,next:NextFunction)=>{

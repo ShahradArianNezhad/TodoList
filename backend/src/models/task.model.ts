@@ -8,7 +8,7 @@ const TaskSchema = new Schema<Itask>({
     createDate:{type:String,required:true},
     todoDate:{type:String,required:false},
     done:{type:Boolean,required:true},
-    user:userSchema
+    user: { type: Schema.Types.ObjectId, ref: 'User' }
     
 })
 

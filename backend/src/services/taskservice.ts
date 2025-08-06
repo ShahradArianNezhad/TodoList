@@ -12,22 +12,22 @@ export const createTask = async(task:string,username:string,tododate:string='')=
         return null
     }
     const curr_date = new Date()
-    const savedData:InputItask = {"task":task,createDate:curr_date.toString(),"todoDate":tododate,"done":false,"user":user}
+    const savedData:InputItask = {"task":task,createDate:curr_date.toString(),"todoDate":tododate,"done":false,"user":user.id}
     const newTask = new Task(savedData)
 
-    const savedTask = newTask.save()
+    const savedTask = await newTask.save()
     return savedTask
 }
 
 
-export const getTasks = async(username:string)=>{
+export const getTasks = async(id:string)=>{
 
 
-    const user = await User.find({username:username})
+    const user = await User.find({id:id})
     if(!user){
         return 0
     }
-    const tasks = await Task.find({user:user})
+    const tasks = await Task.find({user:id})
 
     return tasks
 }

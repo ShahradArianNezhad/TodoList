@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 import { IUser } from '../interfaces/user.interface';
 import cookieInterface from '../interfaces/cookie.interface'
 import cookieParser from 'cookie-parser'
-import cors from "cors"
-import { createTask, getTasks } from '../services/taskservice';
+import { getTasks } from '../services/taskservice';
+import { User } from '../models/user. model';
 
 
 const userRouter = express.Router()
@@ -61,8 +61,8 @@ userRouter.post('/login',async(req:Request,res:Response)=>{
 
 userRouter.get('/auth',async(req:Request,res:Response)=>{
     let sentTasks = null;
-    const jwt_cookie = req.cookies.jwt
-    const mydata = jwt.decode(jwt_cookie) as cookieInterface|null;
+    const jwt_cookie = await req.cookies.jwt
+    const mydata = jwt.decode(jwt_cookie) as cookieInterface;
     if(!mydata){
         return res.json({"status":"unauthorized"})
     }
@@ -70,7 +70,8 @@ userRouter.get('/auth',async(req:Request,res:Response)=>{
     if(!jwt_cookie){
         return res.json({"status":"unauthorized"})
     }
-    const recvTasks = await getTasks(mydata.username)
+    const userId =(await User.findOne({username:mydata.username}))?.id
+    const recvTasks = await getTasks(userId)
     if(recvTasks){
     sentTasks = recvTasks.map(({task,createDate,todoDate,done})=>({task ,createDate ,todoDate, done}))
     }else{
