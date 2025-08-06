@@ -41,6 +41,7 @@ TaskRouter.post("/create",async(req:Request,res:Response)=>{
             res.sendStatus(500)
             return 0
         }
+        console.log(123)
         const newTask = await createTask(task,foundUser?.username,todoDate)
         res.json({"status":"success"})
 
