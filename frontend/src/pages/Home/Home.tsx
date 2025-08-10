@@ -24,6 +24,9 @@ const Home = () => {
     const DATE= new Date()
     const createdDate:string = DATE.getFullYear().toString()+'-'+DATE.getMonth().toString()+'-'+DATE.getDay().toString()+'T'+DATE.getHours().toString()+":"+DATE.getMinutes().toString()
     handlerFunc = ()=>{
+      if(!task || !date){
+        return 0
+      }
       setTempTasks([...tempTasks,{task:task,todoDate:date,createDate:createdDate,done:false}])
       console.log(tempTasks)
     }
@@ -34,6 +37,9 @@ const Home = () => {
 
   }else{
     handlerFunc = ()=>{
+      if(!task || !date){
+        return 0
+      }
 
       const makeCreateReq = async()=>{
         const res = await fetch("http://localhost:8000/api/task/create",{
