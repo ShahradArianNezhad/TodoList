@@ -13,7 +13,11 @@ const Home = () => {
 
   const context= useContext(AuthContext)
   const [task,setTask] = useState("")
+  const [taskErr,setTaskErr] = useState(false)
+
   const [date,setDate] = useState("")
+  const [dateErr,setDateErr] = useState(false)
+
   let handlerFunc = ()=>{}
   let DelHandler = (task:recievedTask)=>{}
 
@@ -24,7 +28,17 @@ const Home = () => {
     const DATE= new Date()
     const createdDate:string = DATE.getFullYear().toString()+'-'+DATE.getMonth().toString()+'-'+DATE.getDay().toString()+'T'+DATE.getHours().toString()+":"+DATE.getMinutes().toString()
     handlerFunc = ()=>{
-      if(!task || !date){
+      if(!task){
+        setTaskErr(true)
+        if(!date){
+          setDateErr(true)
+        }
+        return 0
+      }else if(!date){
+        setDateErr(true)
+        if(!task){
+          setTaskErr(true)
+        }
         return 0
       }
       setTempTasks([...tempTasks,{task:task,todoDate:date,createDate:createdDate,done:false}])
@@ -37,9 +51,20 @@ const Home = () => {
 
   }else{
     handlerFunc = ()=>{
-      if(!task || !date){
+      if(!task){
+        setTaskErr(true)
+        if(!date){
+          setDateErr(true)
+        }
+        return 0
+      }else if(!date){
+        setDateErr(true)
+        if(!task){
+          setTaskErr(true)
+        }
         return 0
       }
+      
 
       const makeCreateReq = async()=>{
         const res = await fetch("http://localhost:8000/api/task/create",{
@@ -88,7 +113,7 @@ const Home = () => {
               Good day, {context.username}
             </div>
             <div className="flex-col items-center pb-7 transition-all duration-200 shadow shadow-black bg-gray-800 w-2/3 flex justify-center rounded-md border-gray-900 border-2">
-              <div className="flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
+              <div className="relative flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
                 <input value={task} onChange={(e)=>{setTask(e.target.value)}} placeholder="Task" className="flex-10 bg-gray-900 w-70 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="text" name="task" id="task" />
                 <input value={date} onChange={(e)=>{setDate(e.target.value)}} placeholder="todo date" className=" flex-2 text-center bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="datetime-local" name="date" id="date" />
                 <button onClick={handlerFunc} className="flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
