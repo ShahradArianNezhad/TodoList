@@ -88,3 +88,12 @@ cd backend
 npm run dev
 ```
 3. you can access the app now on localhost:5173
+
+
+
+
+## Todos
+
+- add full deployment support
+- add full docker build commands
+- add more options for tasks
