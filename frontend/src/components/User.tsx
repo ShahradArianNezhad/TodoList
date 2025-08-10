@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 const logout = async()=>{
+  try{
     await fetch("http://localhost:8000/user/logout",{
         method:"GET",
         headers:{
@@ -11,6 +12,9 @@ const logout = async()=>{
         },
         credentials:"include"
     })
+  }catch{
+    console.log("err failed")
+  }
 }
 
 

@@ -67,6 +67,7 @@ const Home = () => {
       
 
       const makeCreateReq = async()=>{
+        try{
         const res = await fetch("http://localhost:8000/api/task/create",{
           method:'POST',
           body:JSON.stringify({
@@ -79,15 +80,23 @@ const Home = () => {
           credentials:'include'
         })
         console.log(await (res.json()))
+        if(res.ok){
+          context.refresh()
+        }
+        }catch(err){
+          console.log("cant make request to the server ,",err)
+          return 1
+        }
       }
       makeCreateReq()
-      context.refresh()
+      
 
 
 
     }
 
     DelHandler = async(task:recievedTask)=>{
+      try{
       const res =await fetch("http://localhost:8000/api/task/delete",{
         method:"DELETE",
         credentials:"include",
@@ -96,7 +105,12 @@ const Home = () => {
         },
         body:JSON.stringify(task)
       })
-      context.refresh()
+      if (res.ok){
+        context.refresh()
+      }
+      }catch{
+        console.log("Problem with deletion, is the backend working?")
+      }
     }
 
   }
