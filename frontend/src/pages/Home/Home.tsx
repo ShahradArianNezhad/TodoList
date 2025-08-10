@@ -88,15 +88,16 @@ const Home = () => {
     }
 
     DelHandler = async(task:recievedTask)=>{
-      await fetch("http://localhost:8000/api/task/delete",{
+      const res =await fetch("http://localhost:8000/api/task/delete",{
         method:"DELETE",
         credentials:"include",
         headers:{
           "Content-Type":"application/json"
         },
         body:JSON.stringify(task)
-      })}
+      })
       context.refresh()
+    }
 
   }
 
