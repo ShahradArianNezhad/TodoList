@@ -72,6 +72,7 @@ export const editTask = async(task:InputItask,newTask:string)=>{
 
 export const deleteTask = async(task:InputItask)=>{
 
+
     const foundTask = await Task.findOne(task)
 
 

@@ -56,7 +56,16 @@ const Home = () => {
 
     }
 
-    DelHandler = (task:recievedTask)=>{}
+    DelHandler = async(task:recievedTask)=>{
+      await fetch("http://localhost:8000/api/task/delete",{
+        method:"DELETE",
+        credentials:"include",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(task)
+      })}
+      context.refresh()
 
   }
 
@@ -88,7 +97,7 @@ const Home = () => {
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   status: {task.done ? "done" : 'not done'}
                 </button>
-                <button className="flex justify-center items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
+                <button onClick={()=>{DelHandler(task)}} className="flex justify-center items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <img src={trash} alt="delete" className="w-6 text-white" />
                 </button>
               </div>
