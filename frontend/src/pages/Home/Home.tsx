@@ -116,6 +116,25 @@ const Home = () => {
   }
 
 
+  const changeDoneHandler = async(task:recievedTask)=>{
+    const res = await fetch("http://localhost:8000/api/task/done",
+      {
+        method:"POST",
+        credentials:"include",
+        body:JSON.stringify(task),
+        headers:{
+          "Content-Type":"application/json"
+        }
+      }
+    )
+
+    const parsedRes = (await res.json()).status
+    if(parsedRes=="done"){
+      context?.refresh()
+    } 
+  }
+
+
 
 
   return (
@@ -141,6 +160,9 @@ const Home = () => {
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
+                  <input type="checkbox" className="mr-2" checked={task.done} onClick={()=>{
+                    changeDoneHandler(task)
+                    }}/>
                   status: {task.done ? "done" : 'not done'}
                 </button>
                 <button onClick={()=>{DelHandler(task)}} className="flex justify-center items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">

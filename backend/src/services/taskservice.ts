@@ -43,10 +43,11 @@ export const ChangeDone = async(task:InputItask)=>{
         return null
     }
 
+    console.log("asd")
     foundTask.done=!(foundTask?.done)
 
-    foundTask.save()
-    return foundTask
+    await foundTask.save()
+    return true
 
 }
 
