@@ -14,6 +14,8 @@ const Home = () => {
   const context= useContext(AuthContext)
   const [task,setTask] = useState("")
   const [taskErr,setTaskErr] = useState(false)
+
+  const [doneDisabled,setDoneDisabled]= useState(false)
   
   const [date,setDate] = useState("")
   const [dateErr,setDateErr] = useState(false)
@@ -160,8 +162,10 @@ const Home = () => {
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
-                  <input type="checkbox" className="mr-2" checked={task.done} onChange={()=>{
+                  <input disabled={doneDisabled} type="checkbox" className="mr-2" checked={task.done} onChange={()=>{
+                    setDoneDisabled(true)
                     changeDoneHandler(task)
+                    setDoneDisabled(false)
                     }}/>
                   status: {task.done ? "done" : 'not done'}
                 </button>
@@ -193,7 +197,7 @@ const Home = () => {
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 w-70 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
                 <button className="flex justify-around items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
-                  <input type="checkbox" className="mr-2" onClick={()=>{
+                  <input disabled={doneDisabled} type="checkbox" className="mr-2" onClick={(inp)=>{
                     task.done=!task.done
                     }}/>
                   status: {task.done ? "done" : 'not done'}
