@@ -200,7 +200,7 @@ const Home = () => {
                   }} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <img src={pencil} className="w-4" />
                 </button>
-                <input value={task.todoDate} disabled={true} type="datetime-local" className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100"/>
+                <input value={task.todoDate} disabled={true} type="datetime-local" className="cursor-auto text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100"/>
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <input disabled={doneDisabled} type="checkbox" className="mr-2" checked={task.done} onChange={()=>{
                     setDoneDisabled(true)
@@ -246,7 +246,7 @@ const Home = () => {
                 <button onClick={()=>{editMode=="hidden" ? setEditMode("block"): setEditMode("hidden")}} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <img src={pencil} className="w-4" />
                 </button>
-                <input value={task.todoDate} disabled={true} type="datetime-local" className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100"/>
+                <input value={task.todoDate} disabled={true} type="datetime-local" className="cursor-auto text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100"/>
                 <button className="flex justify-around items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <input disabled={doneDisabled} type="checkbox" className="mr-2" onClick={()=>{
                     task.done=!task.done
