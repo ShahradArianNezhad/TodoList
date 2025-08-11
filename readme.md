@@ -96,4 +96,3 @@ npm run dev
 
 - add full deployment support
 - add full docker build commands
-- add more options for tasks
