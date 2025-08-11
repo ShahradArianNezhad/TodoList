@@ -170,7 +170,7 @@ const Home = () => {
             <div className="text-slate-800 text-2xl font-bold m-8">
               Good day, {context.username}
             </div>
-            <div className="flex-col items-center pb-7 transition-all duration-200 shadow shadow-black bg-gray-800 w-2/3 flex justify-center rounded-md border-gray-900 border-2">
+            <div className="flex-col pt-6 items-center pb-7 transition-all duration-200 shadow shadow-black bg-gray-800 w-2/3 flex justify-center rounded-md border-gray-900 border-2">
               <div className="relative flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
                 <input value={task} onChange={(e)=>{setTask(e.target.value)}} placeholder="Task" className="flex-10 bg-gray-900 w-70 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="text" name="task" id="task" />
                 <input value={date} onChange={(e)=>{setDate(e.target.value)}} placeholder="todo date" className="min-w-70 flex-2 text-center bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="datetime-local" name="date" id="date" />
@@ -222,7 +222,7 @@ const Home = () => {
             <div className="text-slate-800 text-2xl font-bold my-10">
               Youre not logged in,please login to use all of the features!
             </div>
-            <div className="flex-col items-center pb-7 transition-all duration-200 shadow shadow-black bg-gray-800 w-2/3 flex justify-center rounded-md border-gray-900 border-2">
+            <div className="pt-6 flex-col items-center pb-7 transition-all duration-200 shadow shadow-black bg-gray-800 w-2/3 flex justify-center rounded-md border-gray-900 border-2">
               <div className="flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
                 <input value={task} onChange={(e)=>{setTask(e.target.value)}} placeholder="Task" className="flex-10 bg-gray-900 w-70 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="text" name="task" id="task" />
                 <input value={date} onChange={(e)=>{setDate(e.target.value)}} placeholder="todo date" className="min-w-70 flex-2 text-center bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="datetime-local" name="date" id="date" />
