@@ -73,7 +73,7 @@ userRouter.get('/auth',async(req:Request,res:Response)=>{
     const userId =(await User.findOne({username:mydata.username}))?.id
     const recvTasks = await getTasks(userId)
     if(recvTasks){
-    sentTasks = recvTasks.map(({task,createDate,todoDate,done})=>({task ,createDate ,todoDate, done}))
+    sentTasks = recvTasks.map(({task,createDate,todoDate,done,id})=>({task ,createDate ,todoDate, done,id}))
     }else{
         sentTasks = recvTasks
     }

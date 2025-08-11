@@ -41,7 +41,7 @@ const Home = () => {
         }
         return 0
       }
-      setTempTasks([...tempTasks,{task:task,todoDate:date,createDate:createdDate,done:false}])
+      setTempTasks([...tempTasks,{task:task,todoDate:date,createDate:createdDate,done:false,id:(Math.random()*100).toString()}])
       console.log(tempTasks)
     }
     DelHandler = (task:recievedTask)=>{
@@ -155,8 +155,8 @@ const Home = () => {
                 </button>
               </div>
               
-              {context.TaskList.map((task)=>(<>
-              <div className="flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
+              {context.TaskList.map((task)=>(
+              <div key={task.id} className="flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
@@ -170,7 +170,7 @@ const Home = () => {
                 </button>
               </div>
               
-              </>))}
+              ))}
 
             </div>
           </>
