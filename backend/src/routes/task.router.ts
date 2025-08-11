@@ -74,8 +74,8 @@ TaskRouter.delete("/delete",async(req:Request,res:Response)=>{
     if(verified){
         const userid = (await User.findOne({username:username}))?.id
         const temptask:InputItask={task:task,createDate:createDate,done:done,todoDate:todoDate,user:userid}
-        const res = deleteTask(temptask)
-        console.log("success")
+        const result = deleteTask(temptask)
+        return res.json({status:"success"})
     }
 
 
