@@ -14,6 +14,7 @@ export const createTask = async(task:string,username:string,tododate:string='')=
     const curr_date = new Date()
     const savedData:InputItask = {"task":task,createDate:curr_date.toString(),"todoDate":tododate,"done":false,"user":user.id}
     const newTask = new Task(savedData)
+    console.log(newTask)
 
     const savedTask = await newTask.save()
     return savedTask
@@ -52,17 +53,19 @@ export const ChangeDone = async(task:InputItask)=>{
 }
 
 
-export const editTask = async(task:InputItask,newTask:string)=>{
+export const editTask = async(task:InputItask,newTask:InputItask)=>{
 
 
     const foundTask = await Task.findOne(task)
+    console.log(task)
 
 
     if(!foundTask){
         return null
     }
 
-    foundTask.task=newTask
+    foundTask.task = newTask.task
+    foundTask.todoDate = newTask.todoDate
 
     foundTask.save()
 

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 import { User } from "../models/user. model"
 import cookieInterface from "../interfaces/cookie.interface"
 import { Task } from "../models/task.model"
-import { ChangeDone, createTask, deleteTask } from "../services/taskservice"
+import { ChangeDone, createTask, deleteTask, editTask } from "../services/taskservice"
 import { InputItask } from "../interfaces/task.interface"
 
 
@@ -42,7 +42,6 @@ TaskRouter.post("/create",async(req:Request,res:Response)=>{
             res.sendStatus(500)
             return 0
         }
-        console.log(123)
         const newTask = await createTask(task,foundUser?.username,todoDate)
         res.json({"status":"success"})
 
@@ -113,4 +112,31 @@ TaskRouter.post("/done",async(req:Request,res:Response)=>{
 
     
 
+})
+
+
+
+TaskRouter.post("/edit",async(req:Request,res:Response)=>{
+    const {oldTask,newTask}:
+    {oldTask:{task:string,todoDate:string,createDate:string,done:boolean},
+    newTask:{task:string,todoDate:string,createDate:string,done:boolean}}
+    =req.body
+
+    const jwt_cookie = req.cookies.jwt
+
+    const verified = jwt.verify(jwt_cookie,process.env.JWT_SECRET!)
+    const jwtData = jwt.decode(jwt_cookie) as cookieInterface
+    if(!jwtData || !verified){
+        res.json({"status":"not logged in"})
+    }
+    const username = jwtData.username
+
+    if(verified){
+        const userid = (await User.findOne({username:username}))?.id
+
+        await editTask({task:oldTask.task,todoDate:oldTask.todoDate,createDate:oldTask.createDate,done:oldTask.done, user:userid},
+            {task:newTask.task,todoDate:newTask.todoDate,createDate:newTask.createDate,done:newTask.done,user:userid})
+
+        res.json({"status":"success"})
+    }
 })

@@ -16,6 +16,10 @@ const Home = () => {
   const [task,setTask] = useState("")
   const [taskErr,setTaskErr] = useState(false)
 
+  const [editedTask,setEditedTask]=useState("")
+  const [editedDate,setEditedDate]=useState("")
+
+
   const [editMode,setEditMode]= useState("hidden")
 
   const [doneDisabled,setDoneDisabled]= useState(false)
@@ -120,6 +124,21 @@ const Home = () => {
 
   }
 
+  const editHandler = async(task:recievedTask,newTask:string,newDate:string)=>{
+    const tempTask:recievedTask = {task:newTask,todoDate:newDate,createDate:task.createDate,done:task.done,id:task.id}
+    const res = await fetch("http://localhost:8000/api/task/edit",{
+      method:"POST",
+      credentials:"include",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({oldTask:task,newTask:tempTask})
+    })
+    if((await res.json()).status=="success"){
+      context?.refresh()
+    }
+  }
+
 
   const changeDoneHandler = async(task:recievedTask)=>{
     const res = await fetch("http://localhost:8000/api/task/done",
@@ -161,9 +180,24 @@ const Home = () => {
               </div>
               
               {context.TaskList.map((task)=>(
-              <div key={task.id} className="flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
+              <div key={task.id} className="relative flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
+                <div className={`flex-col flex justify-center items-center w-full h-full bg-gray-800 opacity-95 absolute border-0 border-gray-900 rounded-md ${editMode}`}>
+                  <div className="flex justify-center items-center">
+                    <input value={editedTask} onChange={(e)=>{setEditedTask(e.target.value)}} placeholder="Task" className="flex-10 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="text" name="task" id="taskedit" />
+                    <input value={editedDate} onChange={(e)=>{setEditedDate(e.target.value)}} placeholder="todo date" className="flex-2 text-center bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="datetime-local" name="date" id="dateedit" />
+                  </div>
+                  <div>
+                    <button onClick={()=>{
+                      editHandler(task,editedTask,editedDate).then(()=>{setEditMode("hidden")})
+                      }} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-1 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">submit</button>
+                  </div>
+                </div>
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
-                <button className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
+                <button onClick={()=>
+                  {editMode=="hidden" ? setEditMode("block"): setEditMode("hidden")
+                    setEditedTask(task.task)
+                    setEditedDate(task.todoDate)
+                  }} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <img src={pencil} className="w-4" />
                 </button>
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
