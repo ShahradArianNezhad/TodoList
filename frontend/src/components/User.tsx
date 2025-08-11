@@ -17,14 +17,6 @@ const logout = async()=>{
   }
 }
 
-
-
-
-
-
-
-
-
 const User = () => {
   const context = useContext(AuthContext)
 

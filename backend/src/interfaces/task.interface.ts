@@ -15,5 +15,5 @@ export interface InputItask{
     createDate:string;
     todoDate:string;
     done:boolean;
-    user:IUser;
+    user:string;
 }

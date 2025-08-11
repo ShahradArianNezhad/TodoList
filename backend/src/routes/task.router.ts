@@ -6,6 +6,7 @@ import cookieInterface from "../interfaces/cookie.interface"
 import { Task } from "../models/task.model"
 import { ChangeDone, createTask, deleteTask, editTask } from "../services/taskservice"
 import { InputItask } from "../interfaces/task.interface"
+import { checkUserAuth } from "../middlewares/Auth"
 
 
 
@@ -116,26 +117,19 @@ TaskRouter.post("/done",async(req:Request,res:Response)=>{
 
 
 
-TaskRouter.post("/edit",async(req:Request,res:Response)=>{
-    const {oldTask,newTask}:
+TaskRouter.post("/edit",checkUserAuth,async(req:Request,res:Response)=>{
+    const {oldTask,newTask,username,id,verified}:
     {oldTask:{task:string,todoDate:string,createDate:string,done:boolean},
-    newTask:{task:string,todoDate:string,createDate:string,done:boolean}}
+    newTask:{task:string,todoDate:string,createDate:string,done:boolean},
+    username:string,
+    id:string,
+    verified:string}
     =req.body
-
-    const jwt_cookie = req.cookies.jwt
-
-    const verified = jwt.verify(jwt_cookie,process.env.JWT_SECRET!)
-    const jwtData = jwt.decode(jwt_cookie) as cookieInterface
-    if(!jwtData || !verified){
-        res.json({"status":"not logged in"})
-    }
-    const username = jwtData.username
-
+    
     if(verified){
-        const userid = (await User.findOne({username:username}))?.id
 
-        await editTask({task:oldTask.task,todoDate:oldTask.todoDate,createDate:oldTask.createDate,done:oldTask.done, user:userid},
-            {task:newTask.task,todoDate:newTask.todoDate,createDate:newTask.createDate,done:newTask.done,user:userid})
+        await editTask({task:oldTask.task,todoDate:oldTask.todoDate,createDate:oldTask.createDate,done:oldTask.done, user:id},
+            {task:newTask.task,todoDate:newTask.todoDate,createDate:newTask.createDate,done:newTask.done,user:id})
 
         res.json({"status":"success"})
     }
