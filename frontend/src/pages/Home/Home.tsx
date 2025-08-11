@@ -164,8 +164,7 @@ const Home = () => {
                 <button className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2  px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <input disabled={doneDisabled} type="checkbox" className="mr-2" checked={task.done} onChange={()=>{
                     setDoneDisabled(true)
-                    changeDoneHandler(task)
-                    setDoneDisabled(false)
+                    changeDoneHandler(task).then(()=>{setDoneDisabled(false)})
                     }}/>
                   status: {task.done ? "done" : 'not done'}
                 </button>
