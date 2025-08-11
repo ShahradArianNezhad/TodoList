@@ -7,10 +7,9 @@ import { AuthContext, type AuthInterface } from "../../../providers/authContext"
 
 const loginBackend = async(username:string,password:string,navigate:NavigateFunction,context?:AuthInterface)=>{
 
-  
-
-
-
+  if(context?.auth){
+    return 0
+  }
 
   const res = await fetch("http://localhost:8000/user/login",{
       method:"POST",

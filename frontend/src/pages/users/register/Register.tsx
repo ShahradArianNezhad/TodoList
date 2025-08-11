@@ -6,7 +6,9 @@ import { AuthContext, type AuthInterface } from "../../../providers/authContext"
 
 const registerBackend = async(username:string,password:string,navigate:NavigateFunction,context?:AuthInterface)=>{
 
-
+  if(context?.auth){
+    return 0
+  }
   const res = await fetch("http://localhost:8000/user/register",{
       method:"POST",
       headers:{
