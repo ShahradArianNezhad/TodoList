@@ -181,20 +181,20 @@ const Home = () => {
               
               {context.TaskList.map((task)=>(
               <div key={task.id} className="relative flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
-                <div className={`flex-col flex justify-center items-center w-full h-full bg-gray-800 opacity-95 absolute border-0 border-gray-900 rounded-md ${editMode}`}>
+                <div className={`flex-col flex justify-center items-center w-full h-full bg-gray-800 opacity-95 absolute border-0 border-gray-900 rounded-md ${editMode==task.id?"block":"hidden"}`}>
                   <div className="flex justify-center items-center">
                     <input value={editedTask} onChange={(e)=>{setEditedTask(e.target.value)}} placeholder="Task" className="flex-10 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="text" name="task" id="taskedit" />
                     <input value={editedDate} onChange={(e)=>{setEditedDate(e.target.value)}} placeholder="todo date" className="flex-2 text-center bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="datetime-local" name="date" id="dateedit" />
                   </div>
                   <div>
                     <button onClick={()=>{
-                      editHandler(task,editedTask,editedDate).then(()=>{setEditMode("hidden")})
+                      editHandler(task,editedTask,editedDate).then(()=>{setEditMode("")})
                       }} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-1 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">submit</button>
                   </div>
                 </div>
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
                 <button onClick={()=>
-                  {editMode=="hidden" ? setEditMode("block"): setEditMode("hidden")
+                  {setEditMode(task.id)
                     setEditedTask(task.task)
                     setEditedDate(task.todoDate)
                   }} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
