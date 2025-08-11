@@ -16,6 +16,8 @@ const Home = () => {
   const [task,setTask] = useState("")
   const [taskErr,setTaskErr] = useState(false)
 
+  const [editMode,setEditMode]= useState("hidden")
+
   const [doneDisabled,setDoneDisabled]= useState(false)
   
   const [date,setDate] = useState("")
@@ -196,14 +198,23 @@ const Home = () => {
               </div>
               
               {tempTasks.map((task)=>(<>
-              <div className="flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
+              <div className="relative flex flex-wrap justify-around items-center w-[80%] my-5 py-2 border-2 border-gray-900 rounded-md">
+                <div className={`flex-col flex justify-center items-center w-full h-full bg-gray-800 opacity-95 absolute border-0 border-gray-900 rounded-md ${editMode}`}>
+                  <div className="flex justify-center items-center">
+                    <input defaultValue={task.task} onChange={(e)=>{task.task = e.target.value}} placeholder="Task" className="flex-10 bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="text" name="task" id="taskedit" />
+                    <input defaultValue={task.todoDate} onChange={(e)=>{task.todoDate = e.target.value}} placeholder="todo date" className="flex-2 text-center bg-gray-900 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3" type="datetime-local" name="date" id="dateedit" />
+                  </div>
+                  <div>
+                    <button onClick={()=>{editMode=="hidden" ? setEditMode("block"): setEditMode("hidden")}} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-1 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">submit</button>
+                  </div>
+                </div>
                 <p className="min-w-[80%] overflow-auto flex-5 bg-gray-900 w-70 my-2 px-3 py-2 outline-0 rounded-md text-gray-400 shadow-black shadow-sm focus:shadow-md transition-all duration-100 mx-3">{task.task}</p>
-                <button className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
+                <button onClick={()=>{editMode=="hidden" ? setEditMode("block"): setEditMode("hidden")}} className="flex justify-center items-center flex-1 font-medium tracking-wide bg-gray-900 w-20 px-1 py-3 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
                   <img src={pencil} className="w-4" />
                 </button>
                 <p className="text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">{task.todoDate.replace('T',' ')}</p>
                 <button className="flex justify-around items-center text-sm text-nowrap flex-1 font-medium tracking-wide bg-gray-900 my-2 w-70 px-3 py-2 outline-0 rounded-md text-gray-400  cursor-pointer shadow-black mx-3 shadow-sm hover:shadow-md transition-all duration-100">
-                  <input disabled={doneDisabled} type="checkbox" className="mr-2" onClick={(inp)=>{
+                  <input disabled={doneDisabled} type="checkbox" className="mr-2" onClick={()=>{
                     task.done=!task.done
                     }}/>
                   status: {task.done ? "done" : 'not done'}
